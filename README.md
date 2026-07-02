@@ -154,8 +154,3 @@ python -m unittest test_hybrid_iot_ids.py
 
 ---
 
-## 👥 Authors
-*   **Rishi Kumar** (RishiKumar1917)
-*   **Aman** (Amanxplore)
-
-*Developed as part of the UPES Minor Project on Smart Building Cybersecurity.*

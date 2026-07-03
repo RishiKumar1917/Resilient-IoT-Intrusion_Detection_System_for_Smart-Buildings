@@ -11,7 +11,7 @@ Today's modern building automation (Operational Technology, or OT) security reli
 *   **The Network Layer (BACnet Secure Connect - BACnet/SC):** Standardized under ASHRAE 135, it uses TLS 1.3 encryption and X.509 digital certificates to secure communications. **However, BACnet/SC only secures the "pipe."** If a sensor is physically tampered with (e.g., heating it with a lighter) or a gateway is compromised, BACnet/SC will happily encrypt and deliver the fake readings.
 *   **The Compliance Layer (ISA/IEC 62443):** This global industrial standard mandates continuous behavioral monitoring and anomaly detection for control systems.
 
-> [!IMPORTANT]
+> [vanilla-css-tip]
 > **Our system acts as the "brain" looking inside the encrypted BACnet/SC pipe.** By analyzing data payloads at the application layer with our 3-tier hybrid engine, we detect **semantic anomalies** (fake drift, frozen drops, and data replays) that encryption cannot see. This directly satisfies the security logging and behavioral monitoring requirements of **ISA/IEC 62443-4-2**.
 
 ---
@@ -19,7 +19,7 @@ Today's modern building automation (Operational Technology, or OT) security reli
 ### 2. Academic & Industry Proof (Stored in `Resource/`)
 Our hybrid approach and next-gen roadmap are validated by three recent research publications:
 
-1.  **AI-Based Sensor Defense:** [Cybersecure Intelligent Sensor Framework for Smart Buildings (Sensors, Dec 2025)](Resource/Cybersecure_Intelligent_Sensor_Framework_Smart_Buildings.pdf)
+1.  **AI-Based Sensor Defense:** [Cybersecure Intelligent Sensor Framework for Smart Buildings (Sensors, Dec 2025)](Resource/Cybersecure%20Intelligent%20Sensor%20Framework%20Smart%20Buildings.pdf)
     *   *Validates:* The industry standard of using hybrid ML (Random Forest/Ensembles) paired with rules to monitor sensor data integrity in smart buildings.
 2.  **Physics-Informed Diagnostics:** [Physics-Informed LLMs/Models for HVAC Anomaly Detection (NeurIPS 2025 Workshop on UrbanAI)](Resource/Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf)
     *   *Validates:* The integration of thermodynamic and physical boundary constraints to improve model transparency and drastically reduce false alarm rates.
@@ -27,6 +27,7 @@ Our hybrid approach and next-gen roadmap are validated by three recent research 
     *   *Validates:* The necessity of dynamic drift adaptation and continuous feedback loops to handle fluctuating sensor data streams.
 
 </details>
+
 
 
 ## ⚡ Key Upgrades 

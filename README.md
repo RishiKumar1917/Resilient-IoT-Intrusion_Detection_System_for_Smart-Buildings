@@ -6,7 +6,7 @@ In this project, we performed an **ARP Spoofing attack** `[ARP Spoofing: An atta
 
 ---
 
-## ⚡ Key Upgrades (June/July 2026)
+## ⚡ Key Upgrades 
 *   **78.10% Overall Accuracy** on multi-sensor streams.
 *   **Interactive Web UI Dashboard** built with Streamlit and Plotly.
 *   **Human-in-the-Loop Feedback Engine** for continuous adaptive learning.

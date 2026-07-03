@@ -16,14 +16,14 @@ Today's modern building automation (Operational Technology, or OT) security reli
 
 ---
 
-### 2. Academic & Industry Proof (Stored in `Resource/`)
+### 2. Academic & Industry Proof (Stored in `Project_Documentation/`)
 Our hybrid approach and next-gen roadmap are validated by three recent research publications:
 
-1.  **AI-Based Sensor Defense:** [Cybersecure Intelligent Sensor Framework for Smart Buildings (Sensors, Dec 2025)](Resource/Cybersecure%20Intelligent%20Sensor%20Framework%20Smart%20Buildings.pdf)
+1.  **AI-Based Sensor Defense:** [Cybersecure Intelligent Sensor Framework for Smart Buildings (Sensors, Dec 2025)](Project_Documentation/Cybersecure%20Intelligent%20Sensor%20Framework%20Smart%20Buildings.pdf)
     *   *Validates:* The industry standard of using hybrid ML (Random Forest/Ensembles) paired with rules to monitor sensor data integrity in smart buildings.
-2.  **Physics-Informed Diagnostics:** [Physics-Informed LLMs/Models for HVAC Anomaly Detection (NeurIPS 2025 Workshop on UrbanAI)](Resource/Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf)
+2.  **Physics-Informed Diagnostics:** [Physics-Informed LLMs/Models for HVAC Anomaly Detection (NeurIPS 2025 Workshop on UrbanAI)](Project_Documentation/Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf)
     *   *Validates:* The integration of thermodynamic and physical boundary constraints to improve model transparency and drastically reduce false alarm rates.
-3.  **Real-Time Adaptive Thresholds:** [Real-Time Adaptive Anomaly Detection in IIoT Environments (IEEE TNSM, 2024/2026)](Resource/RealTime_Adaptive_Anomaly_Detection_IIoT.pdf)
+3.  **Real-Time Adaptive Thresholds:** [Real-Time Adaptive Anomaly Detection in IIoT Environments (IEEE TNSM, 2024/2026)](Project_Documentation/RealTime_Adaptive_Anomaly_Detection_IIoT.pdf)
     *   *Validates:* The necessity of dynamic drift adaptation and continuous feedback loops to handle fluctuating sensor data streams.
 
 </details>
@@ -153,7 +153,6 @@ To bridge the remaining detection gaps and transition this prototype into a comm
 
 ### 📊 B. Enterprise Data Fusion & Streaming
 *   **Multi-Modal Sensor Fusion:** Temperature alone is easy to spoof. We are integrating CO2, air quality (VOCs), motion detectors (PIR), and HVAC power logs. If temperature spikes but the room is empty and the heater is off, the system automatically shuts down the spoofed stream.
-*   **Event-Driven MQTT Streams:** Moving from static file evaluation to a live, asynchronous `[irregularly timed]` sensor queue using MQTT and Apache Kafka to handle live building telemetry.
 *   **Physics-Informed Thermal Modeling:** Connecting our dataset generator to building energy simulators like EnergyPlus to generate highly realistic normal baselines that factor in sunlight, windows, and insulation.
 
 ### 🤖 C. Advanced AI & Architecture Upgrades
@@ -164,12 +163,13 @@ To bridge the remaining detection gaps and transition this prototype into a comm
 ## 📂 Project Structure
 
 ```text
-Preventing-Wrong-Decisions-in-Smart-Building-Systems/
-├── README.md                                                 # Project Documentation
+Resilient-IoT-Intrusion_Detection_System_for_Smart-Buildings/
+├── README.md                                                 # Main Project Documentation
 ├── SECURITY.md                                               # Security reporting guidelines
+├── .gitignore                                                # Git ignore file
 │
-├── Preventing-Wrong-Decisions-in-Smart-Building-Systems-IBM/ # 🚀 Patched Production Codebase
-│   ├── app.py                                                # Streamlit UI monitor dashboard
+├── IDS_Codebase/                                             # 🚀 Patched Production Codebase
+│   ├── app.py                                                # Streamlit UI dashboard
 │   ├── hybrid_iot_ids.py                                     # Core decision engine
 │   ├── feedback_engine.py                                    # Feedback database manager
 │   ├── run_hybrid_demo.py                                    # Automated demo pipeline
@@ -181,20 +181,93 @@ Preventing-Wrong-Decisions-in-Smart-Building-Systems/
 │   ├── features/                                             # Feature extraction submodules
 │   └── DataSet Gen/                                          # Dataset generator scripts
 │
-├── Aman_cybersecurity/                                       # Aman's original security scripts
+├── Snort_Rules/                                              # 🛡️ Snort Rules & Cyber Scripts
 │   ├── detect.py                                             # Original rules script
 │   ├── attacks.py                                            # Original attacks simulator
 │   └── cyber_output.pages                                    # Research documentation
 │
-├── database/                                                 # Raw datasets & logs
-│   ├── dht11_dataset_10000.csv                               # Original 10k single-sensor dataset
-│   └── log_temp.csv                                          # Temperature log data
+├── Project_Documentation/                                    # 📂 Combined Documentation & Resources
+│   ├── Minor Project Presentation.pptx.pptx                  # Semester-End PowerPoint Presentation
+│   ├── Cybersecure Intelligent Sensor Framework Smart Buildings.pdf # Academic PDF
+│   ├── Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf       # Academic PDF
+│   ├── RealTime_Adaptive_Anomaly_Detection_IIoT.pdf          # Academic PDF
+│   ├── Resilient_Smart_Building_Cybersecurity.pdf            # Academic PDF
+│   ├── IDS_MQTT_Report.docx                                  # NIDS Snort Report
+│   └── ... (other administration reports/forms)
 │
-└── archive/                                                  # Archived exploratory work
+├── Datasets/                                                 # 📊 Combined Datasets & Database
+│   ├── dht11_dataset_10000.csv                               # Original 10k single-sensor dataset
+│   ├── log_temp.csv                                          # Temperature log data
+│   ├── data_cleaner.py                                       # Data preprocessing script
+│   └── multi_sensor_cleaned_balanced.csv                     # Cleaned multi-sensor dataset
+│
+├── hardware/                                                 # 🔌 ESP8266 IoT Device Firmware Code
+│   ├── Device_01.ino                                         # Device 1 (DHT11)
+│   ├── Device_02.ino                                         # Device 2 (DHT11)
+│   └── Device_03.ino                                         # Device 3 (DHT22)
+│
+├── plots_and_diagrams/                                       # Diagrams for README.md
+│   └── ...
+│
+└── archive/                                                  # Exploratory work
     └── dht11-anomaly-detection-lstm-ae-replay-attack.ipynb   # Jupyter notebook
-
-
 ``` 
+
+<details>
+<summary><b>🔌 Live IoT Data Generation Layer (ESP8266 & DHT11/22 Firmware)</b></summary>
+
+To test our Intrusion Detection System against live, real-time data, we deployed three physical microcontrollers to stream temperature and humidity telemetry over WiFi.
+
+### 🌐 Hardware Architecture
+```text
+  [Device_01: ESP8266 + DHT11] --(MQTT/WiFi)--> 
+  [Device_02: ESP8266 + DHT11] --(MQTT/WiFi)--> [MQTT Broker: 192.168.1.8 (Port 1883)]
+  [Device_03: ESP8266 + DHT22] --(MQTT/WiFi)--> 
+```
+
+### ⚙️ Device Profiles
+*   **Device 01:** ESP8266 connected to a **DHT11** sensor at pin D4 (GPIO4).
+*   **Device 02:** ESP8266 connected to a **DHT11** sensor at pin D4 (GPIO4).
+*   **Device 03:** ESP8266 connected to a **DHT22** (high precision) sensor at pin D4 (GPIO4).
+
+### 💾 Firmware Source Code (ESP8266 C++)
+This C++ code keeps the MQTT connection alive, syncs time via NTP, and publishes JSON payloads to `sensor/Device_XX` every 5 seconds. The files are located in [hardware/](hardware/).
+</details>
+
+<details>
+<summary><b>🛡️ Network Intrusion Detection (Snort 3 / Snort++ Rule Engine)</b></summary>
+
+While our machine learning layers handle semantic attacks, we deploy **Snort 3** to passively monitor network-level traffic (MQTT on port 1883 and ICMP probes) on our gateway interface (`eth0`).
+
+### ⚙️ Execution Command
+```bash
+sudo snort -i eth0 -A alert_fast -c /etc/snort/snort.lua
+```
+
+### 📝 Custom Snort Rules
+We developed custom rule definitions to detect MQTT scans, traffic flooding, and reconnaissance sweep events:
+
+| Rule Name | Snort 3 Rule Definition | Purpose |
+| :--- | :--- | :--- |
+| **MQTT Connection Attempt** | `alert tcp any any -> any 1883 (msg:"[IoT] MQTT Connection Attempt"; sid:2000001; rev:1;)` | Monitors active client connections to the broker. |
+| **SYN Packet Scan** | `alert tcp any any -> any 1883 (flags:S; msg:"[IoT] MQTT SYN Packet (Possible Scan)"; sid:2000002; rev:1;)` | Flags TCP SYN port scans targeting the MQTT port (e.g., Nmap). |
+| **High MQTT Traffic (DoS)** | `alert tcp any any -> any 1883 (msg:"[IoT] High MQTT Traffic"; detection_filter:track by_src, count 20, seconds 5; sid:2000003; rev:1;)` | Triggers if a source IP floods the broker with $>20$ packets in 5 seconds. |
+| **Reconnaissance Ping** | `alert icmp any any -> any any (msg:"[IoT] Ping Detected"; sid:2000004; rev:1;)` | Flags ICMP echo sweep requests identifying active nodes on the network. |
+
+### 🛠️ Simulated Attack Scenarios Tested
+1.  **Reconnaissance Sweep:** Attacker runs `ping 192.168.1.8`. Snort raises `[IoT] Ping Detected` alerts.
+2.  **Port Scan Detection:** Attacker runs `nmap -p 1883 192.168.1.8`. Snort raises `[IoT] MQTT SYN Packet (Possible Scan)`.
+3.  **Denial of Service (DoS):** Attacker runs an MQTT message flood.
+    ```bash
+    for i in {1..30}; do mosquitto_pub -h 192.168.1.8 -t test -m "attack"; done
+    ```
+    Snort flags the anomalous traffic burst and generates `[IoT] High MQTT Traffic` alerts.
+
+---
+> [!TIP]
+> For the full screenshots, network logs, and rule stats, see the **[IDS_MQTT_Report.docx](Project_Documentation/IDS_MQTT_Report.docx)** inside the `Project_Documentation/` folder.
+</details> 
+
 # 🚀 Getting Started
 
 ## 📋 Prerequisites
@@ -225,7 +298,7 @@ pip install -r requirements.txt
 ## 2️⃣ Navigate to the Project Directory
 
 ```bash
-cd Preventing-Wrong-Decisions-in-Smart-Building-Systems-IBM
+cd IDS_Codebase
 ```
 
 ---

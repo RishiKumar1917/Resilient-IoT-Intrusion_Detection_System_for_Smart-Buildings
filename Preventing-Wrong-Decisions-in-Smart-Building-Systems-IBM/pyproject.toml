@@ -1,5 +1,0 @@
-[project]
-name = "preventing-wrong-decisions-in-smart-building-systems-ibm"
-version = "0.1.0"
-requires-python = ">=3.14"
-dependencies = []

@@ -1,0 +1,1156 @@
+\textbf{``Preventing Wrong Decisions in Smart Building Systems''}
+
+\emph{\textbf{Minor Project Report}}
+
+\emph{submitted in partial fulfillment of the}
+
+\emph{requirements for the award of the degree of}
+
+\textbf{BACHELOR OF TECHNOLOGY}
+
+in
+
+\textbf{COMPUTER SCIENCE \& TECHNOLOGY}
+
+\textbf{by}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\centering\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2724}}
+  >{\centering\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3320}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Name}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Roll No.}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Rishi Kumar & 500126773 \\
+Pranav VR & 500119049 \\
+Aman Rajpoot & 500123398 \\
+Amalkrishnan Ajay & 500120559 \\
+\end{longtable}
+}
+
+\emph{\textbf{Under the guidance of}}
+
+Dr. Amit Gurung
+
+\includegraphics[width=2.18889in,height=1.44167in,alt={Research}]{media/image1.jpeg}
+
+\textbf{School of Computer Science, UPES}
+
+Bidholi, Via Prem Nagar, Dehradun, Uttarakhand
+
+May -- 2026
+
+\textbf{CANDIDATE'S DECLARATION}
+
+We hereby certify that the project work entitled \textbf{``Preventing
+Wrong Decisions in Smart Building Systems''} in partial fulfilment of
+the requirements for the award of the Degree of BACHELOR OF TECHNOLOGY
+in COMPUTER SCIENCE AND ENGINEERING with specialization in Cybersecurity
+and Digital Forensic and submitted to the Department of Systemics,
+School of Computer Science, University of Petroleum \& Energy Studies,
+Dehradun, is an authentic record of my our work carried out during a
+period from \textbf{Jan,} 2026 to \textbf{May}, \textbf{2026} under the
+supervision of \textbf{Amit Gurung, \_\_\_\_Cluster, UPES}.
+
+The matter presented in this project has not been submitted by us for
+the award of any other degree of this or any other University.
+
+\textbf{Rishi Kumar Pranav VR Aman Rajpoot Amalkrishnan Ajay}
+
+500126773 500119049 500123398 500120559
+
+This is to certify that the above statement made by the candidate is
+correct to the best of my knowledge.
+
+Date: \_\_\_\_\_\_\_\_\_ 2026 Project Guide
+
+\textbf{Acknowledgement}
+
+We sincerely thanks to our respected Head Department, \textbf{Mr. Hitesh
+Kumar} for his great support in doing our project.
+
+We sincerely express our gratitude to \textbf{Dr. Srinivasan
+Ramachandran}, Faculty, School of Computer Science (AI and Computer
+Vision Cluster), UPES, for his constant guidance and support. We
+especially thank him for providing the necessary hardware resources and
+for his valuable mentorship in helping us understand and implement IoT
+technologies throughout this project.
+
+We are also grateful to Dean SoCS UPES for giving us the necessary
+facilities to carry out our project work successfully. We also thanks to
+our Course Coordinator, \textbf{Azra Nazir} and our Activity Coordinator
+\textbf{Nitesh Kumar Singh} for providing timely support and information
+during the completion of this project.
+
+We would like to thank all our friends for their help and constructive
+criticism during our project work. Finally, we have no words to express
+our sincere gratitude to our parents who have shown us this world and
+for every support they have given us.
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1590}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2029}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2029}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2029}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2323}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Name}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Rishi Kumar}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Pranav VR}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Aman Rajpoot}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\textbf{Amalkrishnan Ajay}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+SAP Id. & 500126773 & 500119049 & 500123398 & 500120559 \\
+\end{longtable}
+}
+
+\textbf{Abstract}
+
+The rapid growth of smart building systems and IoT-based automation has
+increased reliance on sensor-driven decision-making processes. Most
+existing systems focus on securing data transmission using protocols
+such as MQTT with TLS, ensuring that data is protected during
+communication. However, these systems assume that incoming sensor data
+is always correct. In reality, sensors can be faulty or manipulated
+while still sending believable values, leading to incorrect decisions
+without any warning. This can result in energy inefficiency, system
+malfunction, and potential safety risks.
+
+To address this issue, the proposed Hybrid IoT Intrusion Detection
+System (IDS) introduces a mechanism to verify both the security and
+correctness of data. The system collects real-time data from multiple
+IoT sensor nodes connected through ESP32 devices and an MQTT broker. A
+real-world attack scenario was also performed using ARP spoofing,
+allowing live interception and manipulation of sensor data. This helped
+in generating realistic datasets for training and testing the system.
+
+The system combines multiple detection approaches, including rule-based
+logic and machine learning, to identify abnormal patterns in sensor data
+over time. Instead of relying on single readings, it analyses sequences
+of data to detect subtle changes such as sudden spikes, gradual drift,
+repeated patterns, or unexpected drops. In addition, a network
+monitoring layer observes traffic behaviour to detect suspicious
+activities before they affect the system.
+
+All these components work together in a hybrid decision process,
+improving the accuracy and reliability of anomaly detection. The system
+also includes real-time visualization to help monitor sensor behaviour
+and identify issues easily.
+
+Overall, the proposed solution ensures that automated decisions are
+based on trustworthy data rather than blindly accepted inputs. It
+provides a practical and scalable approach to improving the reliability
+and security of smart building systems and other IoT-based environments.
+
+\textbf{TABLE OF CONTENTS}
+
+\textbf{S.No. Contents Page No}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Introduction 1}
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \item
+    History 2
+  \item
+    Requirement Analysis
+  \end{enumerate}
+\end{enumerate}
+
+\begin{quote}
+1.2.1 Functional Requirements
+
+1.2.2 Non-Functional Requirements
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{2}
+\item
+  Main Objective 4
+\item
+  Sub Objectives 4
+\item
+  System Workflow 5
+\end{enumerate}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{1}
+\item
+  \textbf{System Analysis 6}
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \item
+    Introduction 6
+  \item
+    Existing System 7
+  \item
+    Comparative Analysis 7
+  \item
+    Research Gap 9
+  \end{enumerate}
+\item
+  \textbf{System Design 10}
+\end{enumerate}
+
+3.1 Proposed Solution 10
+
+3.2 System Architecture 11
+
+3.3 Modules
+
+\begin{quote}
+3.4 Design Diagrams 54
+
+3.4.1 Use Case Diagram 43
+
+3.4.2 Activity Diagram 54
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{3}
+\item
+  \textbf{Technology Stack and System Specification 18}
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \item
+    Overview 18
+  \end{enumerate}
+\end{enumerate}
+
+4.2 Hardware Components 19
+
+\begin{quote}
+4.3 Software Components 20
+
+4.4 System Configuration 21
+
+4.5 Design Considerations 23
+
+4.5.1 Scalability 32
+
+4.5.2 Reliability 32
+
+4.5.3 Security 23
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{4}
+\item
+  \textbf{Implementation 34}
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \item
+    Environment Setup 34
+  \item
+    Data Collection and Processing 32
+  \item
+    Attack Simulation 32
+  \item
+    Model Development 23
+  \item
+    System Integration 43
+  \end{enumerate}
+\item
+  \textbf{Output screens and Results 44}
+\item
+  \textbf{Limitations and Future Enhancements} 68
+\end{enumerate}
+
+\begin{quote}
+7.1 Limitations
+
+7.2 Future Enhancements 32
+
+7.2.1 Technical Improvements 32
+
+7.2.2 Applications 32
+\end{quote}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\setcounter{enumi}{7}
+\item
+  \textbf{Conclusion 69}
+\item
+  \textbf{Appendix A -- Keywords 33}
+\item
+  \textbf{References 32}
+\end{enumerate}
+
+\textbf{LIST OF FIGURES}
+
+4.1 IoT Setup (ESP32 + DHT11 Sensors + MQTT Broker)
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+32
+
+5.2 ARP Spoofing Attack Setup
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots{}
+32
+
+5.5 Machine Learning Model Workflow
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots..\ldots.
+32
+
+5.8 Snort IDS Detection and Alert Flow
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots{}
+32
+
+6.1 Real-Time Sensor Monitoring Graph
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots...
+32
+
+\textbf{LIST OF TABLES}
+
+2.1 Comparative Analysis of Existing vs Proposed System
+
+5.1 Dataset Description
+
+5.2 Feature Set Description
+
+6.1 Performance Evaluation Results
+
+A.1 List of Keywords and Definitions
+
+\textbf{Chapter 1}
+
+\textbf{Introduction}
+
+\textbf{1.1 History}
+
+The evolution of building management systems has progressed from manual
+control mechanisms to fully automated smart environments powered by IoT
+technologies. Earlier systems relied on human intervention to monitor
+and regulate environmental conditions such as temperature and humidity.
+While these systems were simple, they lacked efficiency and scalability.
+
+With the advancement of IoT, smart building systems began using
+distributed sensors and automated controllers to make real-time
+decisions. Technologies such as ESP32-based sensor nodes and MQTT
+communication enabled continuous data collection and remote monitoring.
+These systems improved operational efficiency and reduced human effort.
+
+However, as automation increased, so did the dependency on sensor data.
+Most modern systems focus primarily on securing communication channels
+to ensure data Authenticity during Transmission. Despite this, they
+assume that the received data is always correct. In reality, sensors can
+malfunction or be manipulated, resulting in incorrect but believable
+data being used for decision-making.
+
+This limitation led to the need for systems that not only secure data
+transmission but also validate the correctness of data. Recent
+advancements in cybersecurity and machine learning have enabled the
+development of intelligent detection systems capable of identifying
+anomalies and malicious behavior in real time.
+
+The proposed system builds upon these developments by combining
+IoT-based data collection with hybrid intrusion detection techniques,
+ensuring that automated decisions are based on reliable and trustworthy
+data.
+
+\textbf{1.2 Requirement Analysis}
+
+The proposed system requires a combination of IoT infrastructure,
+network monitoring, and intelligent data analysis to detect anomalies
+and potential attacks in real time. The requirements focus on ensuring
+accurate data collection, reliable detection mechanisms, and secure
+system operation. These requirements are categorized into functional and
+non-functional requirements.
+
+\textbf{Functional Requirements}
+
+The system must collect real-time environmental data from multiple IoT
+sensors (ESP32 with DHT11).
+
+• The system must transmit sensor data to a central server using MQTT
+protocol.
+
+• The system must support real-time monitoring of incoming sensor data.
+
+• The system must detect abnormal patterns in data using rule-based
+logic (spike, drift, drop, noise).
+
+• The system must implement machine learning to classify normal and
+attack conditions.
+
+• The system must analyze data in temporal sequences rather than
+individual readings.
+
+• The system must detect replay attacks by comparing current data
+patterns with historical sequences.
+
+• The system must monitor network traffic using an intrusion detection
+system (Snort).
+
+• The system must generate alerts for suspicious activities at both
+network and data levels.
+
+• The system must integrate multiple detection methods into a unified
+decision system.
+
+• The system must provide visualization of sensor data and detected
+anomalies.
+
+\textbf{Non-Functional Requirements}
+
+• Security\textbf{:} The system must ensure secure communication and
+detect malicious data manipulation.
+
+• Reliability\textbf{:} The system must provide consistent and accurate
+detection under continuous operation.
+
+• Scalability\textbf{:} The system should support additional sensors and
+nodes in the future.
+
+• Performance\textbf{:} The system must process and analyze data in real
+time with minimal delay.
+
+• Accuracy\textbf{:} The system should minimize false positives and
+false negatives in detection.
+
+• Usability\textbf{:} The system should provide clear and understandable
+output through visualization.
+
+• Robustness\textbf{:} The system should handle noisy, incomplete, or
+inconsistent data effectively.
+
+\textbf{1.3 Main Objective}
+
+The main objective of this project is to design and develop a hybrid
+intrusion detection system for IoT-based smart building environments
+that ensures reliable and secure decision-making. The system aims to
+detect anomalies and malicious activities in real time by analyzing both
+sensor data and network behavior, preventing incorrect decisions caused
+by faulty or manipulated data.
+
+\textbf{1.4 Sub Objectives}
+
+• To collect real-time environmental data using IoT devices such as
+ESP32 and DHT11 sensors.
+
+• To establish reliable communication between devices using MQTT
+protocol.
+
+• To simulate real-world attacks such as ARP spoofing for generating
+realistic datasets.
+
+• To detect abnormal patterns in sensor data using rule-based
+techniques.
+
+• To develop a machine learning model for classifying normal and attack
+conditions.
+
+• To analyze temporal behavior of data using sequence-based processing.
+
+• To implement replay attack detection using pattern comparison
+techniques.
+
+• To monitor network traffic using an intrusion detection system
+(Snort).
+
+• To integrate network-level and data-level detection into a unified
+system.
+
+• To provide real-time visualization of system behavior and detected
+anomalies.
+
+\textbf{1.5 System Workflow}
+
+The system follows a structured workflow to collect, analyze, and detect
+anomalies in IoT-based smart building environments. The process
+integrates data collection, attack simulation, detection mechanisms, and
+final decision-making.
+
+• Data Collection: Environmental data such as temperature and humidity
+is collected from multiple DHT11 sensors connected to ESP32 devices.
+
+• Data Transmission: The collected data is transmitted in real time to
+an MQTT broker for centralized processing.
+
+• Attack Simulation\textbf{:} A real-world attack scenario is created
+using ARP spoofing to intercept and manipulate sensor data during
+transmission.
+
+• Data Processing: The incoming data is cleaned and prepared for
+analysis, including grouping into sequences for temporal evaluation.
+
+• Feature Extraction: Important statistical and temporal features are
+extracted from the data to identify patterns and behavior.
+
+• Detection (Rule-Based): Basic anomalies such as spikes, drift, noise,
+and drops are detected using predefined rules.
+
+• Detection (Machine Learning): A trained Random Forest model classifies
+the data into normal or different attack categories.
+
+• Replay Detection: The system compares current data patterns with past
+sequences to detect repeated or replayed data.
+
+• Network Monitoring: Snort IDS monitors network traffic to identify
+suspicious activities such as scanning or unauthorized access.
+
+• Decision Making: All detection outputs are combined in a hybrid
+decision system to generate a final result.
+
+• Output and Visualization: The system displays results through
+real-time graphs and alerts for detected anomalies.
+
+\textbf{Chapter 2}
+
+\textbf{SYSTEM ANALYSIS}
+
+\textbf{2.1 Introduction}
+
+The increasing adoption of IoT-based systems in smart buildings has
+enabled automated monitoring and control of environmental conditions
+using sensor data. These systems rely heavily on continuous data streams
+from multiple devices to make real-time decisions, improving efficiency
+and reducing manual effort.
+
+However, most existing systems focus mainly on securing communication
+channels while assuming that the received data is always correct. In
+practice, sensor data can be faulty, noisy, or even intentionally
+manipulated through cyber-attacks. This leads to situations where
+systems function normally but operate on incorrect information,
+resulting in poor decisions and potential risks.
+
+To address these challenges, there is a growing need for intelligent
+systems that can detect anomalies not only at the data level but also at
+the network level. By combining IoT data analysis with cybersecurity
+techniques, it becomes possible to identify both abnormal sensor
+behavior and suspicious network activities.
+
+This chapter analyzes the current approaches used in IoT systems,
+highlights their limitations, and explains the need for a hybrid
+detection system that improves reliability and security in smart
+building environments.
+
+\textbf{2.2 Existing System}
+
+The rapid growth of Internet of Things (IoT) systems has introduced
+significant security challenges due to continuous communication between
+connected devices. Intrusion Detection Systems (IDS) have been widely
+used to monitor network activities and detect malicious behavior in IoT
+environments. IDS plays a crucial role in identifying abnormal patterns
+and protecting systems from cyber threats {[}1{]}.
+
+Existing IDS approaches are mainly classified into signature-based and
+anomaly-based detection systems. Signature-based systems detect known
+attacks using predefined patterns, while anomaly-based systems identify
+deviations from normal behavior, making them capable of detecting
+unknown threats but often producing higher false positives. Suganthi et
+al. discussed the challenges of intrusion detection in IoT due to device
+heterogeneity and network complexity \textbf{{[}2{]}.}
+
+Recent research has focused on integrating machine learning techniques
+into IDS to improve detection accuracy. Rahman et al. highlighted that
+machine learning models can effectively detect complex attack patterns
+in IoT networks by learning from historical data \textbf{{[}3{]}.}
+
+Furthermore, Kikissagbe et al. demonstrated that machine learning-based
+intrusion detection systems enhance detection performance by adapting to
+evolving threats and reducing false alarms \textbf{{[}4{]}.}
+
+Hybrid intrusion detection approaches have also been proposed to combine
+multiple detection techniques. Alakhras et al. emphasized that hybrid
+IDS models improve scalability and detection accuracy by integrating
+different strategies such as rule-based and machine learning methods
+\textbf{{[}5{]}.}
+
+Despite these advancements, most existing systems focus either on
+network-level monitoring or data-level anomaly detection independently.
+This separation limits their effectiveness in real-world IoT
+environments where both network behavior and sensor data must be
+analyzed together. Additionally, challenges such as real-time
+processing, scalability, and handling dynamic IoT environments remain
+open research problems \textbf{{[}6{]}}.
+
+These limitations highlight the need for a hybrid and integrated
+approach that combines multiple detection techniques to improve the
+reliability and security of IoT-based systems.
+
+\textbf{2.3 Research Gap}
+
+The analysis of existing systems reveals that most intrusion detection
+approaches focus either on network-level monitoring or data-level
+anomaly detection independently. Signature-based systems are limited to
+detecting known attacks, while anomaly-based and machine learning
+approaches require large datasets and often struggle with real-time
+implementation.
+
+Additionally, existing solutions lack integration between sensor data
+analysis and network traffic monitoring, which is critical in IoT
+environments where both data manipulation and network-based attacks can
+occur simultaneously.
+
+Furthermore, limited research addresses real-time attack scenarios such
+as ARP spoofing in practical IoT deployments. Many systems are tested on
+simulated datasets rather than real-world manipulated data.
+
+To overcome these limitations, there is a need for a hybrid system that
+combines rule-based detection, machine learning, and network-level
+monitoring into a unified framework. The proposed system addresses this
+gap by integrating IoT data analysis with network intrusion detection
+and real-time attack simulation, improving both accuracy and
+reliability.
+
+\textbf{2.4 Comparative Analysis}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2598}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1818}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1429}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1428}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2727}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Citation}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Detection Type}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{ML Usage}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Network Monitoring}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Remarks}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+{[}1{]} Sarhan et al. & Anomaly-Based & Applied & Not Applied & Focus on
+feature selection for ML-based IDS \\
+{[}2{]} Hindy et al. & ML-Based & Applied & Not Applied & MQTT-based
+dataset and attack detection \\
+{[}3{]} Vitorino et al. & ML Comparison & Applied & Not Applied &
+Comparative study of ML techniques \\
+{[}4{]} Ali et al. & Hybrid ML & Applied & Applied & Multi-layer
+detection for ARP spoofing \\
+{[}5{]} Roesch et al. (Snort) & Signature-Based & Not Applied & Applied
+& Strong network traffic monitoring \\
+{[}6{]} Traditional IDS & Signature-Based & Not Applied & Applied &
+Detects known attacks only \\
+\end{longtable}
+}
+
+\textbf{Chapter 3}
+
+\textbf{System Design}
+
+\textbf{3.1 Proposed System}
+
+The proposed system is a Hybrid Intrusion Detection System (IDS)
+designed for IoT-based smart building environments to ensure secure and
+reliable decision-making. The system integrates IoT data collection,
+network monitoring, and intelligent anomaly detection into a unified
+framework.
+
+The system begins with multiple IoT sensor nodes (ESP32 with DHT11
+sensors) deployed in different zones to collect environmental data such
+as temperature and humidity. These sensors continuously transmit
+real-time data to an MQTT broker, enabling centralized monitoring and
+processing.
+
+To simulate real-world attack scenarios, a Man-in-the-Middle (MITM)
+attack is performed using ARP spoofing, allowing interception and
+manipulation of live sensor data. This approach enables the generation
+of realistic datasets, improving the effectiveness of the detection
+system.
+
+The proposed system incorporates a multi-layer detection mechanism:
+
+• A rule-based detection layer identifies simple anomalies such as
+sudden spikes, gradual drift, noise, and abnormal drops in sensor data.
+
+• A machine learning layer uses a Random Forest model trained on
+real-time generated datasets to classify normal and attack conditions.
+Machine learning-based IDS have been widely used in IoT environments to
+improve detection accuracy and adaptability.
+
+• A replay detection mechanism compares current data sequences with
+historical patterns to detect repeated or replayed data injections.
+
+• A network monitoring layer using Snort IDS analyzes network traffic to
+detect suspicious activities such as scanning, probing, and unauthorized
+access. IDS systems play a crucial role in identifying abnormal behavior
+in IoT networks.
+
+All detection components are integrated into a hybrid decision system,
+which combines outputs from different layers to generate a final
+decision with higher accuracy and reduced false positives. Research
+shows that hybrid IDS approaches improve detection performance by
+combining multiple techniques.
+
+The system also includes a real-time visualization module that provides
+graphical representation of sensor data and detected anomalies, enabling
+easier monitoring and analysis.
+
+Overall, the proposed system provides a scalable and efficient solution
+for detecting both data-level anomalies and network-level attacks,
+ensuring that automated decisions are based on reliable and trustworthy
+information in IoT environments.
+
+\textbf{3.2 System Architecture}
+
+The proposed system follows a modular and layered architecture that
+integrates IoT data collection, network monitoring, and intelligent
+anomaly detection. Each component works together to ensure accurate
+detection of both data-level and network-level attacks in real time.
+
+The system consists of the following main components:
+
+\textbf{•} IoT Layer:\textbf{\hfill\break
+}This layer includes ESP32 devices connected with DHT11 sensors that
+continuously collect environmental data such as temperature and humidity
+from different zones.
+
+• Communication Layer (MQTT Broker):\\
+Sensor data is transmitted in real time to an MQTT broker, which acts as
+a central communication hub between IoT devices and the processing
+system.
+
+• Attack Simulation Layer:\\
+This layer performs ARP spoofing-based Man-in-the-Middle (MITM) attacks
+to intercept and manipulate sensor data during transmission, enabling
+realistic dataset generation.
+
+• Data Processing Layer:\textbf{\hfill\break
+}The collected data is cleaned and organized into sequences for further
+analysis. Feature extraction is performed to identify meaningful
+patterns in the data.
+
+\textbf{•} Detection Layer:\\
+This layer consists of multiple detection mechanisms:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Rule-based detection for identifying simple anomalies
+\item
+  Machine learning model (Random Forest) for classification
+\item
+  Replay detection for identifying repeated data patterns
+\end{enumerate}
+
+• Network Monitoring Layer:\\
+A Snort-based IDS monitors network traffic and detects suspicious
+activities such as scanning, probing, and unauthorized access.
+
+• Decision Layer:\\
+All detection outputs are combined in a hybrid decision system to
+produce a final result with improved accuracy and reduced false
+positives.
+
+• Visualization Layer:\\
+The system provides real-time graphs and outputs to monitor sensor
+behavior and detected anomalies.
+
+\textbf{3.3 Modules}
+
+The system is divided into multiple modules, each responsible for a
+specific task to ensure efficient detection of anomalies and attacks.
+
+\textbf{•} IoT Data Collection Module:\textbf{\hfill\break
+}This module collects real-time environmental data from ESP32 devices
+connected with DHT11 sensors.
+
+\textbf{•} Communication Module (MQTT):\\
+Handles the transmission of sensor data from IoT devices to the central
+system using the MQTT protocol.
+
+\textbf{•} Attack Simulation Module:\\
+Implements ARP spoofing to simulate real-world Man-in-the-Middle (MITM)
+attacks and generate manipulated data.
+
+\textbf{•} Data Processing Module\textbf{:}\\
+Preprocesses incoming data, including cleaning, formatting, and
+organizing it into sequences for analysis.
+
+• Feature Extraction Module:\\
+Extracts important statistical and temporal features from sensor data to
+identify patterns.
+
+\textbf{•} Rule-Based Detection Module:\\
+Detects basic anomalies such as spikes, drift, noise, and sudden drops
+using predefined rules.
+
+\textbf{•} Machine Learning Module:\\
+Uses a Random Forest model to classify data into normal and different
+attack categories.
+
+\textbf{•} Replay Detection Module:\\
+Identifies repeated or replayed data patterns by comparing current
+sequences with historical data.
+
+\textbf{•} Network Monitoring Module (Snort IDS):\\
+Monitors network traffic and detects suspicious activities such as
+scanning and unauthorized access.
+
+\textbf{•} Decision Module (Hybrid System):\\
+Combines outputs from all detection layers to generate a final decision
+with improved accuracy.
+
+\textbf{•} Visualization Module:\\
+Displays real-time graphs and outputs for monitoring sensor data and
+detected anomalies.
+
+\textbf{3.4 Design Diagrams}
+
+3.4.1 Use Case Diagram
+
+Figure 3.1:
+
+3.4.2 Activity Diagram
+
+Figure 3.2:
+
+\textbf{Chapter 4}
+
+\textbf{Technology Stack and System}
+
+\textbf{Specifications}
+
+\subsubsection{\texorpdfstring{\textbf{4.1
+Overview}}{4.1 Overview}}\label{overview}
+
+The proposed system is built using a combination of IoT hardware,
+communication protocols, and intelligent software components. It
+integrates real-time data collection, network monitoring, and anomaly
+detection into a unified framework. The system is designed to be
+lightweight, scalable, and suitable for IoT environments.
+
+\subsubsection{\texorpdfstring{\textbf{4.2 Hardware
+Components}}{4.2 Hardware Components}}\label{hardware-components}
+
+\textbf{•} ESP32 Microcontroller:\\
+ESP32 is a low-cost, energy-efficient microcontroller with built-in
+Wi-Fi and Bluetooth capabilities, widely used in IoT systems for data
+collection and communication
+
+\textbf{•} DHT11 Sensors:\\
+Used for collecting environmental data such as temperature and humidity
+from different zones.
+
+\textbf{•} Network Environment (Wi-Fi):\\
+Provides connectivity between IoT devices and the central system for
+real-time communication.
+
+\subsubsection{\texorpdfstring{\textbf{4.3 Software
+Components}}{4.3 Software Components}}\label{software-components}
+
+\textbf{•} Programming Language: Python
+
+\textbf{•} Libraries: NumPy, Pandas, Scikit-learn, Matplotlib
+
+\textbf{•} MQTT Broker (Eclipse Mosquitto):\\
+Used for lightweight and efficient communication between IoT devices and
+the processing system.
+
+\textbf{•} Snort IDS:\\
+An open-source network intrusion detection system used to monitor
+network traffic and detect suspicious activities such as scanning and
+unauthorized access
+
+\textbf{•} Attack Simulation Tools\textbf{:} Bettercap, Wireshark
+
+\subsubsection{\texorpdfstring{\textbf{4.4 System
+Configuration}}{4.4 System Configuration}}\label{system-configuration}
+
+• Multi-sensor IoT setup (3 ESP32 + DHT11 nodes)
+
+• Real-time data transmission using MQTT protocol
+
+• Dataset generated through real-time attack simulation (ARP spoofing)
+
+• Machine learning model: Random Forest Classifier
+
+• Feature engineering using statistical and temporal features
+
+• Window-based data processing for sequence analysis.
+
+\textbf{4.5 Design Considerations}
+
+\textbf{4.5.1 Scalability}
+
+The system is designed to support additional IoT devices and sensors
+without significant changes to the architecture.
+
+\textbf{4.5.2 Reliability}
+
+Multiple detection layers (rule-based, ML, and network monitoring)
+ensure consistent and accurate results even under attack conditions.
+
+\textbf{4.5.3 Security}
+
+The system addresses both network-level and data-level threats,
+including ARP spoofing and data manipulation attacks.
+
+\textbf{Chapter 5}
+
+\textbf{Implementation}
+
+\textbf{5.1 Environment Setup}
+
+The system was developed using a combination of hardware and software
+tools. ESP32 microcontrollers were connected with DHT11 sensors to
+collect environmental data. All devices were connected over a common
+Wi-Fi network.
+
+The software environment included Python for data processing and machine
+learning, Eclipse Mosquitto as the MQTT broker for communication, and
+Snort IDS for network monitoring. Tools such as Bettercap and Wireshark
+were used for attack simulation and traffic analysis.
+
+\subsubsection{\texorpdfstring{\textbf{5.2 Data Collection and
+Processing}}{5.2 Data Collection and Processing}}\label{data-collection-and-processing}
+
+Real-time environmental data such as temperature and humidity was
+collected from multiple sensor nodes. The data was transmitted to the
+MQTT broker and then received by a Python-based subscriber system.
+
+The collected data was cleaned and structured into a dataset. It was
+further processed into fixed-size windows to capture temporal behavior.
+Feature extraction techniques were applied to generate meaningful
+attributes such as mean, standard deviation, and rate of change.
+
+\subsubsection{\texorpdfstring{\textbf{5.3 Attack
+Simulation}}{5.3 Attack Simulation}}\label{attack-simulation}
+
+A real-world attack scenario was implemented using ARP spoofing. The
+attacker system intercepted communication between ESP32 devices and the
+MQTT broker.
+
+Using this approach, sensor data was manipulated in real time to
+simulate different attack patterns such as spikes, drift, and repeated
+data. This helped in generating realistic datasets for training and
+testing the detection system.
+
+\subsubsection{\texorpdfstring{\textbf{5.4 Model
+Development}}{5.4 Model Development}}\label{model-development}
+
+A Random Forest classifier was developed for anomaly detection. The
+model was trained using the generated dataset containing both normal and
+attack data.
+
+The system used temporal window-based learning instead of individual
+data points. The model classified data into different categories such as
+normal behavior, injection, drift, noise, drop, and replay attacks.
+
+Feature scaling and preprocessing were applied to improve model
+performance and accuracy.
+
+\subsubsection{\texorpdfstring{\textbf{5.5 System
+Integration}}{5.5 System Integration}}\label{system-integration}
+
+All components of the system were integrated into a unified framework.
+Sensor data collection, attack simulation, detection mechanisms, and
+network monitoring were combined into a hybrid detection pipeline.
+
+The system processed incoming data in real time, applied rule-based and
+machine learning detection, and correlated results with network-level
+alerts from Snort ID.
+
+\textbf{Chapter 6}
+
+\textbf{Output Screens and Results}
+
+Figure 6.1:
+
+\textbf{Chapter 7}
+
+\textbf{Limitations and Future Enhancements}
+
+\textbf{7.1 Limitations}
+
+The system currently operates in a controlled environment, and
+real-world deployment may introduce additional challenges such as
+network instability and device heterogeneity.
+
+• The machine learning model performance depends on the quality and
+diversity of the dataset. Limited variations in attack scenarios may
+affect generalization.
+
+• Real-time processing may introduce slight delays when handling large
+volumes of data or multiple sensor nodes simultaneously.
+
+• The system relies on predefined rules for certain detections, which
+may not cover all possible attack patterns.
+
+• Snort IDS is used in detection mode only and does not actively block
+malicious traffic.
+
+\textbf{7.2 Future Enhancements}
+
+\textbf{7.2.1 Technical Improvements}
+
+• Integration of deep learning models (such as LSTM or CNN) to improve
+detection of complex temporal patterns.
+
+• Implementation of automated response mechanisms (IPS) to block
+malicious activities in real time.
+
+• Expansion of the dataset with more real-world attack scenarios to
+improve model robustness.
+
+• Optimization of the system for large-scale deployments with multiple
+IoT devices.
+
+• Development of a dashboard-based interface for advanced monitoring and
+control.
+
+\textbf{7.2.2 Applications}
+
+\textbf{•} Smart Buildings\textbf{:} Enhancing reliability and security
+of automated HVAC and environmental systems.
+
+\textbf{•} Industrial IoT (IIoT): Monitoring and protecting industrial
+sensor networks from cyber threats.
+
+• Healthcare Systems: Ensuring secure monitoring of medical IoT devices
+and patient data.
+
+• Smart Cities: Securing large-scale IoT infrastructures used in
+traffic, energy, and surveillance systems.
+
+• Research and Cybersecurity Testing: Providing a platform for studying
+IoT attack scenarios and developing advanced detection techniques.
+
+\textbf{Chapter 8}
+
+\textbf{Conclusion}
+
+This project presents a hybrid intrusion detection system designed for
+IoT-based smart building environments. The system addresses a critical
+issue in modern automated systems, where decisions are made based on
+sensor data that may be incorrect or manipulated.
+
+The proposed solution integrates multiple components including IoT-based
+data collection, real-time communication using MQTT, network monitoring
+through Snort IDS, and intelligent anomaly detection using rule-based
+techniques and machine learning. A real-world attack scenario using ARP
+spoofing was implemented to generate realistic datasets and evaluate
+system performance.
+
+By combining data-level analysis with network-level monitoring, the
+system provides a more comprehensive approach to intrusion detection
+compared to traditional methods. The use of temporal analysis and a
+hybrid decision-making mechanism improves detection accuracy while
+reducing false positives.
+
+The results demonstrate that the system is capable of identifying
+various types of anomalies and attacks in real time, making it suitable
+for practical deployment in IoT environments. Overall, the project
+highlights the importance of validating both data security and data
+correctness in cyber-physical systems.
+
+The proposed system provides a scalable and effective solution for
+improving the reliability and security of smart building systems and can
+be extended further to support advanced detection and prevention
+mechanisms in the future.
+
+\textbf{Appendix A}
+
+\textbf{Keywords}
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.2647}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.7353}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\centering
+\textbf{Keyword}
+\end{minipage} & \begin{minipage}[b]{\linewidth}\centering
+\textbf{Definition}
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+IoT (Internet of Things) & A network of interconnected devices that
+collect and exchange data in real time. \\
+Intrusion Detection System (IDS) & A system that monitors network or
+system activities to detect malicious behavior or security threats. \\
+MQTT Protocol & A lightweight messaging protocol used for communication
+between IoT devices and servers. \\
+ESP32 & A low-cost microcontroller with built-in Wi-Fi used for
+IoT-based data collection and communication. \\
+DHT11 Sensor & A sensor used to measure temperature and humidity in IoT
+environments. \\
+ARP Spoofing & A type of cyber-attack where an attacker intercepts
+communication by manipulating network address mappings. \\
+Machine Learning & A method that enables systems to learn patterns from
+data and make predictions or classifications. \\
+Random Forest & A machine learning algorithm that uses multiple decision
+trees for accurate classification. \\
+Anomaly Detection & The process of identifying unusual patterns that do
+not match expected system behavior. \\
+Rule-Based Detection & A method that uses predefined rules to identify
+specific types of anomalies or attacks. \\
+Replay Attack & An attack where previously captured data is resent to
+manipulate system behavior. \\
+Snort IDS & An open-source network intrusion detection system used to
+monitor and analyze network traffic. \\
+Feature Engineering & The process of extracting meaningful features from
+raw data for analysis and model training. \\
+Temporal Analysis & The analysis of data over time to detect patterns
+and changes in behavior. \\
+Hybrid Detection System & A system that combines multiple detection
+techniques such as rule-based, machine learning, and network
+monitoring. \\
+\end{longtable}
+}
+
+\textbf{References}
+
+{[}1{]} M. Berhili et al., ``Intrusion Detection Systems in IoT Based on
+Machine Learning: A Review,'' \emph{Procedia Computer Science}, 2024.
+
+{[}2{]} A. Kumar and R. Singh, ``Machine Learning for IoT Intrusion
+Detection: A Comprehensive Survey,'' \emph{Journal of Network and
+Computer Applications}, vol. 222, 2023.
+
+{[}3{]} S. Yaras et al., ``IoT-Based Intrusion Detection System Using
+Deep Learning Techniques,'' \emph{Electronics (MDPI)}, vol. 13, 2024.
+
+{[}4{]} A. Almotairi et al., ``Enhancing Intrusion Detection in IoT
+Using Machine Learning-Based Models,'' \emph{Journal of Information
+Security}, 2024.
+
+{[}5{]} S. Li et al., ``Explainable AI-Based Intrusion Detection in IoT
+Systems,'' \emph{ScienceDirect}, 2025.
+
+{[}6{]} S. Fraihat et al., ``Advanced Intrusion Detection for IoT
+Devices Using Federated Learning,'' \emph{Springer}, 2025.
+
+{[}7{]} J. Ashraf et al., ``Real-Time Intrusion Detection System for IoT
+Networks,'' \emph{Applied Sciences}, 2025.
+
+{[}8{]} M. Ali et al., ``Intrusion Detection in IoT Networks for MitM
+Attack Detection Using ML and DL,'' \emph{Springer}, 2025.

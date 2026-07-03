@@ -3,7 +3,6 @@
 A smart, real-time security system that protects smart buildings from hackers trying to tamper with temperature and humidity sensors (like the DHT11) to hijack heating and cooling systems. 
 
 In this project, we performed an **ARP Spoofing attack** `[ARP Spoofing: An attack where a hacker links their computer to the network gateway to intercept and modify sensor readings]` to hijack and manipulate live sensor data. We then used this hijacked data to train our Machine Learning models, and we developed **Snort Rules** `[Snort Rules: Network security rules used to detect and drop malicious traffic packets]` to identify and block these spoofing attempts in real time.
-
 <details>
 <summary><b>🛡️ Enterprise Alignment & Relevance (BACnet/SC, ISA/IEC 62443, and Research Validation)</b></summary>
 
@@ -17,22 +16,18 @@ Today's modern building automation (Operational Technology, or OT) security reli
 
 ---
 
-### 2. Academic & Industry Proof (Stored in `documentation/`)
+### 2. Academic & Industry Proof (Stored in `Resource/`)
 Our hybrid approach and next-gen roadmap are validated by three recent research publications:
 
-1.  **AI-Based Sensor Defense:** [Cybersecure Intelligent Sensor Framework for Smart Buildings (Sensors, Dec 2025)](file:///c:/Users/rishi/Downloads/Minor%20Project/documentation/Cybersecure_Intelligent_Sensor_Framework_Smart_Buildings.pdf)
+1.  **AI-Based Sensor Defense:** [Cybersecure Intelligent Sensor Framework for Smart Buildings (Sensors, Dec 2025)](Resource/Cybersecure_Intelligent_Sensor_Framework_Smart_Buildings.pdf)
     *   *Validates:* The industry standard of using hybrid ML (Random Forest/Ensembles) paired with rules to monitor sensor data integrity in smart buildings.
-2.  **Physics-Informed Diagnostics:** [Physics-Informed LLMs/Models for HVAC Anomaly Detection (NeurIPS 2025 Workshop on UrbanAI)](file:///c:/Users/rishi/Downloads/Minor%20Project/documentation/Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf)
+2.  **Physics-Informed Diagnostics:** [Physics-Informed LLMs/Models for HVAC Anomaly Detection (NeurIPS 2025 Workshop on UrbanAI)](Resource/Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf)
     *   *Validates:* The integration of thermodynamic and physical boundary constraints to improve model transparency and drastically reduce false alarm rates.
-    *   *File Link:* [Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf](file:///c:/Users/rishi/Downloads/Minor%20Project/documentation/Physics_Informed_LLM_HVAC_Anomaly_Detection.pdf)
-3.  **Real-Time Adaptive Thresholds:** [Real-Time Adaptive Anomaly Detection in IIoT Environments (IEEE TNSM, 2024/2026)](file:///c:/Users/rishi/Downloads/Minor%20Project/documentation/RealTime_Adaptive_Anomaly_Detection_IIoT.pdf)
+3.  **Real-Time Adaptive Thresholds:** [Real-Time Adaptive Anomaly Detection in IIoT Environments (IEEE TNSM, 2024/2026)](Resource/RealTime_Adaptive_Anomaly_Detection_IIoT.pdf)
     *   *Validates:* The necessity of dynamic drift adaptation and continuous feedback loops to handle fluctuating sensor data streams.
-    *   *File Link:* [RealTime_Adaptive_Anomaly_Detection_IIoT.pdf](file:///c:/Users/rishi/Downloads/Minor%20Project/documentation/RealTime_Adaptive_Anomaly_Detection_IIoT.pdf)
 
 </details>
 
-
----
 
 ## ⚡ Key Upgrades 
 *   **78.10% Overall Accuracy** on multi-sensor streams.

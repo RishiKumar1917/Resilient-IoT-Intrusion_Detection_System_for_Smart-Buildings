@@ -108,18 +108,18 @@ To prevent AI hallucinations and adapt to seasonal building operations, the fram
 
 Validation results comparing the system before and after our patches:
 
-| Metric | Before Patches | After Patches (Current Baseline) |
-| :--- | :---: | :---: |
-| **Overall Accuracy** | 52.48% | **78.10%** |
-| **Normal Recall** | 64.18% | **90.16%** (Precision: 94.03%) |
-| **Noise Attack Recall** | 0.00% | **93.85%** (Precision: 64.21%) |
-| **Drift Attack Recall** | 28.03% | **43.80%** (Precision: 55.21%) |
-| **Replay Attack Recall** | 0.00% | **3.33%** (Precision: 100.00%) |
-| **Drop Attack Recall** | 0.00% | **13.41%** (Precision: 100.00%) |
+| Metric |Current Baseline|
+| :--- | :---: |
+| **Overall Accuracy** | **78.10%** |
+| **Normal Recall** | **90.16%** (Precision: 94.03%) |
+| **Noise Attack Recall** | **93.85%** (Precision: 64.21%) |
+| **Drift Attack Recall** | **43.80%** (Precision: 55.21%) |
+| **Replay Attack Recall** | **3.33%** (Precision: 100.00%) |
+| **Drop Attack Recall** | **13.41%** (Precision: 100.00%) |
 
 ---
 
-## 🚀 Next-Gen Roadmap: Upgrading to a Production-Grade IDS
+## 🚀 Solution Roadmap: 
 
 To bridge the remaining detection gaps and transition this prototype into a commercial-grade, rock-solid smart building security product, we are launching an aggressive technical upgrade roadmap divided into three core pillars:
 ### ⚡ A. Hardware & Edge Optimization
@@ -136,6 +136,7 @@ To bridge the remaining detection gaps and transition this prototype into a comm
 *   **Constant-Time Replay Search via LSH:** Instead of a limited sliding 100-window history, we are implementing Locality-Sensitive Hashing (LSH). LSH converts window waves into short signatures, allowing the detector to query a database of 10,000+ past windows in constant $O(1)$ time to catch replays from days ago instantly.
 *   **Seasonal & Diurnal Adaptive Baselines:** Temperature baselines naturally drift between day and night, and summer and winter. We are deploying an online adaptive baseline threshold that self-adjusts based on weather forecasts and time-of-day.
 *   **Temporal Convolutional Networks (TCNs):** Upgrading from recurrent LSTM models to 1D Temporal CNNs with dilated convolutions. CNNs process time-series windows in parallel, dramatically speeding up training and edge inference.
+  
 ## 📂 Project Structure
 
 ```text

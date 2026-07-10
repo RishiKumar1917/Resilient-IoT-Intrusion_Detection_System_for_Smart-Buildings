@@ -126,22 +126,6 @@ To prevent AI hallucinations and adapt to seasonal building operations, the fram
 3.  **Memory Storage:** Corrected feature vectors and their target labels are stored in `feedbackmemory.json`.
 4.  **Instant Matching:** For subsequent inferences, the classification engine checks the feedback database for similar historical patterns, bypassing model errors and automatically correcting similar alerts in the future.
 
----
-
-## 📊 Performance Evaluation Matrix
-
-Validation results comparing the system before and after our patches:
-
-| Metric |Current Baseline|
-| :--- | :---: |
-| **Overall Accuracy** | **78.10%** |
-| **Normal Recall** | **90.16%** (Precision: 94.03%) |
-| **Noise Attack Recall** | **93.85%** (Precision: 64.21%) |
-| **Drift Attack Recall** | **43.80%** (Precision: 55.21%) |
-| **Replay Attack Recall** | **3.33%** (Precision: 100.00%) |
-| **Drop Attack Recall** | **13.41%** (Precision: 100.00%) |
-
----
 
 ## 🚀 Solution Roadmap: 
 

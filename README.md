@@ -109,10 +109,10 @@ graph TD
 
 3.  **Tier 3: Deterministic Rule Engine (Edge Case Defense)**
     *   Runs alongside ML to catch clear physical limits.
-    *   **Injection Attack Rule:** Triggered if `max_jump > 5.0°C` or `zscore_max > 5.0`.
+    *   **Injection Attack Rule:** Triggered when large spikes persist (`max_jump > 6.0°C`, `zscore_max > 6.0`, or `range > 6.5`) and control-state signals (e.g., HVAC/occupancy/PIR) do not indicate expected activity.
     *   **Replay Attack Rule:** Compares the incoming data window to historical signatures in the buffer to catch repeated signals.
     *   **Drift Attack Rule:** Triggered when `abs(slope) > drift_threshold` (0.05).
-    *   **Drop Attack Rule:** Triggered if `std < 0.1` and `range < 0.4` (freeze detection) or `slope < -0.15` (step drop).
+    *   **Drop Attack Rule:** Triggered if `std < 0.3` and `range < 0.4` (freeze detection with noise tolerance) or `slope < -0.15` (step drop).
     *   **Noise Attack Rule:** Triggered if `std > 2.0` and `entropy > 1.5`.
 
 ---

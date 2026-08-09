@@ -72,9 +72,11 @@ class ModelConfig:
 class ThresholdConfig:
     drift_threshold: float = 0.05
     replay_similarity_threshold: float = 0.9
-    drop_std_threshold: float = 0.1
-    drop_range_threshold: float = 0.2
-    injection_range_threshold: float = 5.0
+    drop_std_threshold: float = 0.3
+    drop_range_threshold: float = 0.4
+    injection_range_threshold: float = 6.5
+    injection_jump_threshold: float = 6.0
+    injection_zscore_threshold: float = 6.0
     noise_std_threshold: float = 2.0
     noise_entropy_threshold: float = 1.5
     iso_anomaly_threshold: float = 0.0
@@ -558,6 +560,30 @@ def classify_window(
     window_size: int = 30,
 ) -> DetectionResult:
     threshold_config = threshold_config or ThresholdConfig()
+
+    def _as_active_state(value: Any) -> bool:
+        if pd.isna(value):
+            return False
+        if isinstance(value, str):
+            return value.strip().lower() in {"1", "true", "on", "active", "occupied", "yes"}
+        if isinstance(value, (bool, np.bool_)):
+            return bool(value)
+        if isinstance(value, (int, float, np.integer, np.floating)):
+            return float(value) > 0.0
+        return False
+
+    def _control_state_active(window_df: pd.DataFrame) -> bool:
+        state_key_tokens = ("hvac", "occup", "pir", "room_active", "fan", "heater", "cooling", "heating")
+        for col in window_df.columns:
+            col_norm = col.lower()
+            if not any(token in col_norm for token in state_key_tokens):
+                continue
+            series = window_df[col].dropna()
+            if series.empty:
+                continue
+            if _as_active_state(series.iloc[-1]):
+                return True
+        return False
     if len(sequence) < window_size:
         return DetectionResult(
             timestamp=timestamp or pd.Timestamp.utcnow(),
@@ -582,6 +608,7 @@ def classify_window(
     anomaly_flag = reconstruction_error > threshold
 
     feature_dict = {}
+    control_state_active = False
     rf_prediction = "Normal"
     gb_prediction = "Normal"
     rf_conf = 0.0
@@ -601,6 +628,7 @@ def classify_window(
         candidates = src_df[end_mask]
         if len(candidates) >= window_size_seq:
             seq_slice = candidates.iloc[-window_size_seq:]
+            control_state_active = _control_state_active(seq_slice)
             feature_dict = build_sequence_feature_vector(seq_slice)
             feature_df = pd.DataFrame([feature_dict])
 
@@ -700,11 +728,15 @@ def classify_window(
         decision_source = "rule_engine"
 
     # Injection Attack (sudden extreme jumps, but overall variance is not noise-like)
-    elif not pass_to_ml and (temp_10_max_jump > 5.0 or temp_10_zscore_max > 5.0):
+    elif (
+        not pass_to_ml
+        and not control_state_active
+        and (temp_10_max_jump > threshold_config.injection_jump_threshold or temp_10_zscore_max > threshold_config.injection_zscore_threshold)
+    ):
         predicted_label = "Injection Attack"
         confidence = "HIGH"
         decision_source = "rule_engine"
-    elif not pass_to_ml and temp_range > threshold_config.injection_range_threshold and feature_dict:
+    elif not pass_to_ml and not control_state_active and temp_range > threshold_config.injection_range_threshold and feature_dict:
         predicted_label = "Injection Attack"
         confidence = "HIGH"
         decision_source = "rule_engine"
@@ -716,7 +748,7 @@ def classify_window(
         decision_source = "rule_engine"
 
     # Drop Attack represents a stuck sensor (freeze) or a sudden large temperature drop
-    elif temp_std < 0.1 and temp_range < 0.4 and feature_dict:
+    elif temp_std < threshold_config.drop_std_threshold and temp_range < threshold_config.drop_range_threshold and feature_dict:
         predicted_label = "Drop Attack"
         confidence = "HIGH"
         decision_source = "rule_engine"

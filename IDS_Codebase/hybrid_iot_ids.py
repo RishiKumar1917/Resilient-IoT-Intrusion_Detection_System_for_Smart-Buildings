@@ -404,22 +404,25 @@ def _split_normal_sequences(
 ) -> tuple[SequenceBundle, SequenceBundle]:
     train_masks: list[np.ndarray] = []
     val_masks: list[np.ndarray] = []
+    gap_windows = max(0, int(bundle.X.shape[1]) - 1)
     for source in bundle.metadata["source"].unique():
         source_mask = bundle.metadata["source"].eq(source).to_numpy()
         indices = np.where(source_mask)[0]
         if len(indices) < 2:
             train_masks.append(indices)
             continue
-        split_idx = max(1, int(math.floor(len(indices) * (1.0 - validation_fraction))))
-        split_idx = min(split_idx, len(indices) - 1)
-        train_masks.append(indices[:split_idx])
-        val_masks.append(indices[split_idx:])
+        max_train_count = len(indices) - gap_windows - 1
+        if max_train_count < 1:
+            train_masks.append(indices)
+            continue
+        train_count = max(1, int(math.floor(len(indices) * (1.0 - validation_fraction))))
+        train_count = min(train_count, max_train_count)
+        val_start = train_count + gap_windows
+        train_masks.append(indices[:train_count])
+        val_masks.append(indices[val_start:])
 
     train_idx = np.concatenate(train_masks) if train_masks else np.array([], dtype=int)
     val_idx = np.concatenate(val_masks) if val_masks else np.array([], dtype=int)
-    if len(val_idx) == 0:
-        val_idx = train_idx[-max(1, min(10, len(train_idx))):]
-        train_idx = train_idx[: max(1, len(train_idx) - len(val_idx))]
     return _subset_bundle(bundle, train_idx), _subset_bundle(bundle, val_idx)
 
 

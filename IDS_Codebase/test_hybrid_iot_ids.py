@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 import pandas as pd
@@ -31,6 +32,27 @@ class IdentityModel:
 class ShiftModel:
     def predict(self, X: np.ndarray) -> np.ndarray:
         return np.asarray(X, dtype=np.float32) + 0.5
+
+
+class PassthroughScaler:
+    def transform(self, X: np.ndarray) -> np.ndarray:
+        return np.asarray(X, dtype=np.float32)
+
+
+class ConstantClassifier:
+    def __init__(self, label: str = "normal") -> None:
+        self.label = label
+
+    def predict(self, X: np.ndarray) -> np.ndarray:
+        return np.array([self.label], dtype=object)
+
+    def predict_proba(self, X: np.ndarray) -> np.ndarray:
+        return np.array([[1.0]], dtype=np.float32)
+
+
+class ConstantIsoForest:
+    def decision_function(self, X: np.ndarray) -> np.ndarray:
+        return np.array([0.0], dtype=np.float32)
 
 
 class HybridIoTIDSTest(unittest.TestCase):
@@ -168,6 +190,91 @@ class HybridIoTIDSTest(unittest.TestCase):
 
     def test_similarity_returns_zero_for_shape_mismatch(self) -> None:
         self.assertEqual(ids._window_similarity(np.ones((2, 2), dtype=np.float32), np.ones((3, 2), dtype=np.float32)), 0.0)
+
+    def _classify_with_stubbed_features(
+        self,
+        feature_overrides: dict[str, float],
+        *,
+        control_columns: dict[str, float] | None = None,
+    ) -> DetectionResult:
+        base_features = {
+            "temp_30_slope": 0.0,
+            "temp_30_std": 0.0,
+            "temp_30_range": 0.0,
+            "temp_30_entropy": 0.0,
+            "temp_10_max_jump": 0.0,
+            "temp_10_zscore_max": 0.0,
+        }
+        base_features.update(feature_overrides)
+
+        window_df = pd.DataFrame(
+            {
+                "timestamp": pd.to_datetime(
+                    ["2026-01-01T00:00:00", "2026-01-01T00:00:01", "2026-01-01T00:00:02"]
+                ),
+                "source": ["src_a", "src_a", "src_a"],
+                "sensor_id": ["src_a", "src_a", "src_a"],
+                "temperature_c": [20.0, 20.1, 20.2],
+                "humidity_percent": [40.0, 40.1, 40.2],
+            }
+        )
+        for col, val in (control_columns or {}).items():
+            window_df[col] = [val, val, val]
+
+        sequence = np.ones((3, 2), dtype=np.float32)
+        timestamp = pd.Timestamp("2026-01-01T00:00:02")
+
+        old_globals = {
+            "global_engineered_df": getattr(ids, "global_engineered_df", None),
+            "global_rf_model": getattr(ids, "global_rf_model", None),
+            "global_gb_model": getattr(ids, "global_gb_model", None),
+            "global_iso_model": getattr(ids, "global_iso_model", None),
+            "global_feature_scaler": getattr(ids, "global_feature_scaler", None),
+            "ENABLE_FEEDBACK": getattr(ids, "ENABLE_FEEDBACK", True),
+        }
+        setattr(ids, "global_engineered_df", window_df)
+        setattr(ids, "global_rf_model", ConstantClassifier("normal"))
+        setattr(ids, "global_gb_model", ConstantClassifier("normal"))
+        setattr(ids, "global_iso_model", ConstantIsoForest())
+        setattr(ids, "global_feature_scaler", PassthroughScaler())
+        setattr(ids, "ENABLE_FEEDBACK", False)
+
+        try:
+            with patch.object(ids, "build_sequence_feature_vector", return_value=base_features):
+                return classify_window(
+                    sequence=sequence,
+                    model=IdentityModel(),
+                    threshold=1.0,
+                    history_buffer=[],
+                    replay_config=ReplayConfig(history_size=10, min_gap_windows=0),
+                    threshold_config=ids.ThresholdConfig(),
+                    timestamp=timestamp,
+                    source="src_a",
+                    window_size=3,
+                )
+        finally:
+            for name, value in old_globals.items():
+                setattr(ids, name, value)
+
+    def test_drop_rule_accepts_expected_sensor_noise(self) -> None:
+        result = self._classify_with_stubbed_features({"temp_30_std": 0.25, "temp_30_range": 0.35})
+        self.assertEqual(result.predicted_label, "Drop Attack")
+        self.assertEqual(result.decision_source, "rule_engine")
+
+    def test_injection_rule_suppressed_when_hvac_active(self) -> None:
+        result = self._classify_with_stubbed_features(
+            {"temp_30_std": 1.0, "temp_30_range": 7.0, "temp_10_max_jump": 7.0, "temp_10_zscore_max": 7.0},
+            control_columns={"hvac_on": 1.0},
+        )
+        self.assertNotEqual(result.predicted_label, "Injection Attack")
+
+    def test_injection_rule_triggers_when_control_state_inactive(self) -> None:
+        result = self._classify_with_stubbed_features(
+            {"temp_30_std": 1.0, "temp_30_range": 7.0, "temp_10_max_jump": 7.0, "temp_10_zscore_max": 7.0},
+            control_columns={"hvac_on": 0.0},
+        )
+        self.assertEqual(result.predicted_label, "Injection Attack")
+        self.assertEqual(result.decision_source, "rule_engine")
 
 
 if __name__ == "__main__":

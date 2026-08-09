@@ -551,7 +551,10 @@ fcol4.metric("Z-Score Max (10s)", f"{t_zscore:.4f}")
 interpretation = []
 if abs(t_slope) > sys_state["threshold_config"].drift_threshold:
     interpretation.append("📈 Strong trend detected (Drift)")
-if t_jump > 6.0 or t_zscore > 4.0:
+if (
+    t_jump > sys_state["threshold_config"].injection_jump_threshold
+    or t_zscore > sys_state["threshold_config"].injection_zscore_threshold
+):
     interpretation.append("⚡ Sudden burst detected (Injection)")
 elif t_range > sys_state["threshold_config"].injection_range_threshold:
     interpretation.append("⚡ Spike behavior detected (Injection)")

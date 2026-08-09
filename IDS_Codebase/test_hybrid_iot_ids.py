@@ -64,6 +64,52 @@ class HybridIoTIDSTest(unittest.TestCase):
         self.assertTrue((bundle.metadata["source"].value_counts() == 5).all())
         self.assertEqual(set(bundle.metadata["source"]), {"src_a", "src_b"})
 
+    def test_split_normal_sequences_keeps_train_validation_chronologically_separate(self) -> None:
+        rows = []
+        for idx in range(20):
+            rows.append(
+                {
+                    "timestamp": pd.Timestamp("2026-01-01 00:00:00") + pd.Timedelta(seconds=idx),
+                    "temperature_c": 20.0 + idx,
+                    "humidity_percent": 40.0 + idx,
+                    "source": "src_a",
+                    "sensor_id": "src_a",
+                    "attack_type": "normal",
+                    "label": 0,
+                    "class_label": "normal",
+                }
+            )
+        featured = engineer_features(pd.DataFrame(rows), consistency_window=3)
+        bundle = make_sequences(featured, window_size=5, feature_cols=get_feature_columns())
+        train_bundle, val_bundle = ids._split_normal_sequences(bundle, validation_fraction=0.2)
+        self.assertGreater(len(train_bundle.X), 0)
+        self.assertGreater(len(val_bundle.X), 0)
+        self.assertGreater(
+            val_bundle.metadata["start_timestamp"].min(),
+            train_bundle.metadata["end_timestamp"].max(),
+        )
+
+    def test_split_normal_sequences_returns_empty_validation_when_no_non_overlapping_window_exists(self) -> None:
+        rows = []
+        for idx in range(8):
+            rows.append(
+                {
+                    "timestamp": pd.Timestamp("2026-01-01 00:00:00") + pd.Timedelta(seconds=idx),
+                    "temperature_c": 20.0 + idx,
+                    "humidity_percent": 40.0 + idx,
+                    "source": "src_a",
+                    "sensor_id": "src_a",
+                    "attack_type": "normal",
+                    "label": 0,
+                    "class_label": "normal",
+                }
+            )
+        featured = engineer_features(pd.DataFrame(rows), consistency_window=3)
+        bundle = make_sequences(featured, window_size=5, feature_cols=get_feature_columns())
+        train_bundle, val_bundle = ids._split_normal_sequences(bundle, validation_fraction=0.2)
+        self.assertGreater(len(train_bundle.X), 0)
+        self.assertEqual(len(val_bundle.X), 0)
+
     def test_detect_replay_uses_exact_hash(self) -> None:
         replay_config = ReplayConfig(history_size=10, similarity_threshold=0.99, min_gap_windows=0)
         sequence = np.array([[0.1, 0.2], [0.2, 0.3]], dtype=np.float32)
